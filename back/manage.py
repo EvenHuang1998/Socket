@@ -14,22 +14,24 @@ thread=None
 
 def process():
     data=[]
-    for i in range(7):
+    for _ in range(7):
         data.append(random.random())
     return data
 
 def background_thread():
     while True:
-        socketio.sleep(0.1)
+        socketio.sleep(1)
         result = process()
-        # print(result)
+        print(result)
         socketio.emit('newdata', {'data': result})
 
 @socketio.on('connect')
 def handle_message():
+    print("连接成功！！！")
     global thread
     if thread is None:
         thread=socketio.start_background_task(target=background_thread)
+    # background_thread()
 
 @socketio.on('disconnect', namespace='/chat')
 def test_disconnect():

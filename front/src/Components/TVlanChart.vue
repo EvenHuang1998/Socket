@@ -4,10 +4,15 @@
 
 <script>
 export default {
-    name:'Chart',
+    name:'TVlanChart',
     data(){
         return{
             chart:""
+        }
+    },
+    sockets:{
+        connect:function(){
+            console.log("chart component socket连接成功")
         }
     },
     props:{
@@ -122,7 +127,6 @@ export default {
         }
     },
     mounted(){
-        
         this.chart=this.$echarts.init(document.getElementById(this.chartID));
         this.chart.setOption(this.option);
     }
