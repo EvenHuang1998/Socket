@@ -15,14 +15,14 @@ thread=None
 def process():
     data=[]
     for _ in range(7):
-        data.append(random.random())
+        data.append(round(random.random(),2))
     return data
 
 def background_thread():
     while True:
         socketio.sleep(1)
         result = process()
-        print(result)
+        # print(result)
         socketio.emit('newdata', {'data': result})
 
 @socketio.on('connect')

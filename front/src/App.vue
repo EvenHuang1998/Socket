@@ -1,19 +1,7 @@
 <template>
-
   <a-layout id="components-layout-demo-top-side-2">
     <a-layout-header class="header">
       <h2 class="title">测量系统展示平台</h2>
-      <!-- <a-menu theme="dark" mode="horizontal" :default-selected-keys="['1']" :style="{ lineHeight: '64px' }">
-        <a-menu-item key="1">
-          nav 1
-        </a-menu-item>
-        <a-menu-item key="2">
-          nav 2
-        </a-menu-item>
-        <a-menu-item key="3">
-          nav 3
-        </a-menu-item>
-      </a-menu> -->
     </a-layout-header>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
@@ -74,64 +62,31 @@
       </a-layout-sider>
       <a-layout style="padding: 0 24px 24px">
         <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px',minWidth:'1500px' }">
-          <h2>数据包实时测量</h2>
-          <div style="padding: 10px;">
-            <a-row :gutter="16">
-              <a-col :span="8" v-for="(name,index) in chart_name" :key="index">
-                <a-card  :title="name" :bordered="true" :hoverable="true" :style="{marginBottom:'10px'}">
-                  <t-vlan-chart  class="Chart"  :chartID="name" :x_data="x"
-                    :y_data="y[index]" :testcount="testcount" >
-                  </t-vlan-chart>
-                </a-card>
-              </a-col>
-            </a-row>
-          </div>
+          <show-realtime-test></show-realtime-test>
         </a-layout-content>
       </a-layout>
     </a-layout>
   </a-layout>
 
-        
 
 </template>
 
  
 <script>
-import TVlanChart from './Components/TVlanChart.vue';
+import ShowRealtimeTest from './views/ShowRealtimeTest.vue';
 export default{
   name:"App",
-  components: { TVlanChart },
+  components: { ShowRealtimeTest },
   data(){
     return {
-      chart_name:["All","ARP","IPv4","ICMP","TCP","UDP"],
-      y:[],
-      x:"",
-      testcount:0,
       collapsed:false
     }
-  },
-  component:{
-    TVlanChart
-  },
-  sockets: {
-    connect: function () {
-      console.log("socket连接成功");
-    },
-    newdata:function(val){
-      this.testcount=(this.testcount+1)%1000
-      // console.log('got new data');
-      this.x=new Date().toLocaleString();
-      this.y=val.data;
-    }
   }
+  
 }
 </script>
  
 <style>
-.Chart{
-  display: inline-block;
-}
-
 
 .title {
   /* width: 180px; */
